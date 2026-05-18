@@ -19,5 +19,6 @@ All images must be resized to 224x224 dimensions before training. We might creat
 
 
 **Spark UI Verification**
-![Executors](images/spark_ui_executors.h)
+
+![Executors](images/spark_ui_executors.png)
 
