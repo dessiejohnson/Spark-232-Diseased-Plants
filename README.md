@@ -16,9 +16,15 @@ All images must be resized to 224x224 dimensions before training. We might creat
 
 **First Distributed Model**
 
+**Speed Up Analysis**
+
+Speedup Analysis Table
+==================================================
+ Executors Time (sec) Speedup Efficiency
+         1      835.4   1.00x       100%
+         4      916.6   0.91x        23%
 
 
 **Spark UI Verification**
 
 ![Executors](images/spark_ui_executors.png)
-
