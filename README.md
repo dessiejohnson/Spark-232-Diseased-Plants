@@ -17,7 +17,7 @@ To further address this data imbalance, we created a new weights column in our t
 
 **First Distributed Model**
 
-[Link to First Distributed Model Notebook](Diseased Plants Preprocessing + First Model.ipynb)
+[Link to First Distributed Model Notebook](https://github.com/dessiejohnson/Spark-232-Diseased-Plants/blob/Milestone3/Diseased%20Plants%20Preprocessing%20%2B%20First%20Model.ipynb)
 
 For our first model, we wanted to implement a binary classification model to determine whether or not a plant is diseased. To achieve this, we utilized xgboost.spark.XGBoostClassifier as our distributed implementation model. 
 
