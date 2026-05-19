@@ -45,7 +45,7 @@ Overall, the model performs well with high accuracy. However, does not generaliz
 | 1 | 835.4 | 1.00x | 100% |
 | 4 | 916.6 | 0.91x | 23% |
 
-Conducted speed up analysis on XGBoost options 2 & 3. Time is calculated from: model set hyperparameters -> fitting to train data -> predictions on validation -> evaluation. Speed up analysis indicates a decrease in both speed up and efficiency as num_workers is increased. Likely due to the choice of utilized Spark which can be inefficient compared to its Rey counterpart. The model runs on cores and does not utilize executors set in Spark.builder. It may be worth exploring how a Rey model might better perform.
+Conducted speed up analysis on XGBoost options 2 & 3, both initialized with same seed. Time is calculated from: model set hyperparameters -> fitting to train data -> predictions on validation -> evaluation. Speed up analysis indicates a decrease in both speed up and efficiency as num_workers is increased. Likely due to the choice of utilized Spark which can be inefficient compared to its Rey counterpart. The model runs on cores and does not utilize executors set in Spark.builder. It may be worth exploring how a Rey model might better perform.
 
 **Spark UI Verification**
 
