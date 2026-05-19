@@ -49,4 +49,6 @@ Conducted speed up analysis on XGBoost options 2 & 3. Time is calculated from: m
 
 **Spark UI Verification**
 
+Ran 4 executors with 32g of memory each.
+
 ![Executors](images/spark_ui_executors.png)
