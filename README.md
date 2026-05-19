@@ -8,10 +8,11 @@ Link to Dataset: https://www.kaggle.com/datasets/samareshkumar/multipleplantdise
 
 **Pre-Processing The Data**
 
-From the exploratory analysis, we found that there is no missing data in our dataset; therefore, no preprocessing needs to be done in that regard. 
-However, there are significant data imbalances that we observed in the initial visualizations. With regard to our multiclass classification problem, tomato images dominate the dataset, but there are not many chili or cauliflower images at all in comparison. To address this imbalance, we can undersample our majority class, tomato. To achieve this we can randomly sample tomato images and delete them so that they do not completely dominate our dataset. Another option is to oversample our minority classes to increase their size relative to the larger classes. We can perform these operations in Spark using .sample(), .filter(), and .union(). There is also a greater quantity of diseased plant images than healthy plant images for our binary classification problem. We can apply similar methods of undersampling the majority class (diseased plants) and oversampling the minority class (healthy plants). In addition, the images in the dataset have different sizes.
+From the exploratory analysis, we found that there is no missing data in our dataset; therefore, no preprocessing needed to be done in that regard. 
 
-All images must be resized to 224x224 dimensions before training. We might create a UDF to access the images, resize them, and store the resized versions as bytes in the dataframe using .withColumn(). We also must split the data into train and test sets. We can do this using .randomSplit() in Spark. We should perform this before oversampling the majority and undersampling the minority because we only want to apply those to the training set and leave the test set as is.
+We first created new, clean columns for the labels. Next, we split our data into train, validation, and test sets. There are large imbalances in our dataset. For example, tomato images dominate but there are not many chili or cauliflower images in comparison. Similarly, there are many more diseased plant images than healthy plant images. Because of this, we made sure that all of the classes were represented in our train, validation, and test sets by using stratified random sampling.
+
+To further address this data imbalance, we created a new weights column in our training datasets. We use this in our models to penalize mistakes on the minority class more heavily. We also label encoded our labels columns. Finally, all images were resized to the same dimensions before training. We created a pandas UDF to access the images, resize them, and store the resized versions as bytes in the dataframe using .withColumn(). 
 
 
 **First Distributed Model**
