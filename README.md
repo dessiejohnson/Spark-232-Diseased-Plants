@@ -15,6 +15,7 @@ All images must be resized to 224x224 dimensions before training. We might creat
 
 
 **First Distributed Model**
+
 For our first model, we wanted to implement a binary classification model to determine whether or not a plant is diseased. To achieve this, we utilized xgboost.spark.XGBoostClassifier as our distributed implementation model. 
 
 During our validation stage, we tested different versions of hyper parameters to train our model and utilize the best performing hyperparameter model on the test set.
