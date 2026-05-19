@@ -17,6 +17,8 @@ To further address this data imbalance, we created a new weights column in our t
 
 **First Distributed Model**
 
+[Link to First Distributed Model Notebook](Diseased Plants Preprocessing + First Model.ipynb)
+
 For our first model, we wanted to implement a binary classification model to determine whether or not a plant is diseased. To achieve this, we utilized xgboost.spark.XGBoostClassifier as our distributed implementation model. 
 
 During our validation stage, we tested different versions of hyper parameters to train our model and utilize the best performing hyperparameter model on the test set.
