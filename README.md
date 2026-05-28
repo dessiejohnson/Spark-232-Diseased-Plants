@@ -59,7 +59,7 @@ Ran 4 executors with 32g of memory each.
 
 ### Second Model
 
-[LINK TO NOTEBOOK](https://github.com/dessiejohnson/Spark-232-Diseased-Plants/blob/73cc8aeae66f6a1162237187c96a07aebd91dd89/Diseased%20Plants%20Model2.ipynb)
+[Link to Diseased Plants Model2 Notebook](https://github.com/dessiejohnson/Spark-232-Diseased-Plants/blob/73cc8aeae66f6a1162237187c96a07aebd91dd89/Diseased%20Plants%20Model2.ipynb)
 
 For our second model, we used dimensionality reduction followed by a Random Forest Model to determine the species of the plants in the dataset. Principle Component Analysis (PCA) was used for the dimensionality reduction which was implemented with pyspark.ml.feature.PCA. The RandomForestClassifier from pyspark.ml.classification was used to implement the supervised ML model on the reduced-dimension features. A Logistic Regression model was initally implemented, but it did not perform very well which was why the RandomForestClassifier was implemented. However, both models provided insightful findings for our dataset.
 
