@@ -55,3 +55,48 @@ Conducted speed up analysis on XGBoost options 2 & 3, both initialized with same
 Ran 4 executors with 32g of memory each.
 
 ![Executors](images/spark_ui_executors.png)
+
+
+### Second Model
+
+LINK TO NOTEBOOK
+
+For our second model, we used dimensionality reduction followed by a Random Forest Model to determine the species of the plants in the dataset. Principle Component Analysis (PCA) was used for the dimensionality reduction which was implemented with pyspark.ml.feature.PCA. The RandomForestClassifier from pyspark.ml.classification was used to implement the supervised ML model on the reduced-dimension features. A Logistic Regression model was initally implemented, but it did not perform very well which was why the RandomForestClassifier was implemented. However, both models provided insightful findings for our dataset.
+
+The random forest model achieved a training accuracy of approximately 0.91 while the validation and test accuracies were both about 0.75. The gap between training and unseen data performance suggests hat the model is learning patterns in the training set that do not fully generalize to new samples. In contrast, the logistic regression model achieved approximately 0.61-0.64 accuracy across training, validation, and test sets, indicating more consistent but lower performance. 
+
+Principal Component Analysis (PCA) retained k = 200 components, and had approximately 0.95 (95%) of the total variance in the original feature space. The high variance indicates that the dimensionality reduction preserved most of the important information in the dataset. However, high explained variance does not guarantee high classification performance, since PCA is unsupervised and does not preserve class-separating directions.
+
+The random forest model is in the mild overfitting region with the high training score but moderate validation and test scores. The logistic regression model on the other hand is in the underfitting region with low scores in training, validation and test sets. This indicates insufficient model complexity to capture nonlinear relationships in our dataset.
+
+Some future improvements that could be done for this model is used a more advanced model like Convolutional Neural Network (CNN) which will likely deliver better image classification accuracy. The results indicate that the dimensionality reduction with PCA reduced computational cost while retaining 95% variance. PCA likely improved model stability and efficiency. 
+
+Further hyperparameter tuning will likely not improve the performance of either the random forest or logistic regression models based on the investigation done in this project. The first table below show the result accuracies for different parameters that were tested in the logistic regression model. The second table shows the accuracy results for different parameters of the random forest model.
+
+| Parameter(s)       | Training Accuracy | Validation Accuracy | Test Accuracy |
+|--------------------|-------------------|---------------------|---------------|
+| k=10, 8x8 image    | 0.46              | 0.45                | 0.45          |
+| k=100, 8x8 image   | 0.63              | 0.62                | 0.63          |
+| k=100, 16x16 image | 0.61              | 0.61                | 0.60          |
+| k=100, 24x24 image | 0.60              | 0.60                | 0.60          |
+| k=300, 24x24 image | 0.66              | 0.62                | 0.63          |
+
+| Parameter(s)              | Training Accuracy | Validation Accuracy | Test Accuracy |  PCA, image size   |
+|---------------------------|-------------------|---------------------|---------------|--------------------|
+| numTrees=50, maxDepth=8   | 0.70              | 0.62                | 0.63          | k=300, 24x24 image |
+| numTrees=100, maxDepth=12 | 0.92              | 0.75                | 0.74          | k=300, 24x24 image |
+| numTrees=100, maxDepth=10 | 0.84              | 0.70                | 0.71          | k=300, 24x24 image |
+| numTrees=150, maxDepth=12 | 0.93              | 0.76                | 0.76          | k=300, 24x24 image |
+| numTrees=100, maxDepth=14 | 0.97              | 0.77                | 0.78          | k=300, 24x24 image |
+| numTrees=100, maxDepth=12 | 0.92              | 0.75                | 0.74          | k=300, 32x32 image |
+| numTrees=100, maxDepth=12 | 0.92              | 0.75                | 0.75          | k=200, 24x24 image |
+
+
+Higher accuracies in the random forest model came with the tradeoff of a longer training time. The Spark driver memory had to be increased from the recommended 2GB to 12GB for the model training to complete in a reasonable timeframe.
+
+In total, 5913 images were correctly classified and 1945 images were classified incorrectly.
+
+![Executors](images/Model2_ConfusionMatrix.png)
+
+
+In conclusion, logistic regression served as a baseline but lacked the complexity required to capture nonlinear relationships in image-derived features. PCA effectively reduced dimensionality while preserving most variance. However, PCA + classical ML models reached a performance ceiling. To significantly improve performance, future work should focus on deep learning-based feature extraction (CNNs).
