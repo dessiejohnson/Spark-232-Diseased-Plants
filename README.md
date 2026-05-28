@@ -24,18 +24,10 @@ Link to dataset: https://www.kaggle.com/datasets/samareshkumar/multipleplantdise
 
 
 ## Statement of Collaboration
-<u>Name:</u> Desire Johnson
-<u>Title:</u> Project Manager, Writer, Coder
-<u>Contribution:</u> Abstract, data exploration, final report
+| Name            | Title                          | Contribution                               |
+|-----------------|--------------------------------|--------------------------------------------|
+| Desirè Johnson  | Project Manager, Writer, Coder | Abstract, data exploration, final report   |
+| Angela Fan      | Writer, Coder                  | Abstract, pre-processing, final report     |
+| Megan Felix     | Coder, Writer                  | Model 1, final report                      |
+| Ashley Chong    | Coder, Writer                  | Model 2, final report                      |
 
-<u>Name:</u> Angela Fan
-<u>Title:</u> Writer, Coder
-<u>Contribution:</u> Abstract, pre-processing, final report
-
-<u>Name:</u> Megan Felix
-<u>Title:</u> Coder, Writer
-<u>Contribution:</u> Model 1, final report
-
-<u>Name:</u> Ashley Chong
-<u>Title:</u> Coder, Writer
-<u>Contribution:</u> Model 2, final report
