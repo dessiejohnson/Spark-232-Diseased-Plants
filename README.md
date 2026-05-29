@@ -9,7 +9,9 @@ Link to dataset: https://www.kaggle.com/datasets/samareshkumar/multipleplantdise
 
 ### Pre-Processing
 
-To begin preprocessing the data for model training, we created a Spark dataframe with four columns: file_path, class_label, plant, and disease. 
+To begin preprocessing the data for model training, we created a Spark dataframe with four columns: file_path, class_label, plant, and disease. To create the latter 3 columns, we split the file_path string at different parts to isolate what we needed. The "plant" column served as the label for our multiclass classification problem addressed by Model 2. We created a new column called "disease_clean" to serve as the lable for our binary classification problem addressed by Model 1. This new column strictly labeled an image as either healthy or diseased, rather than including all of the different types of disease which was by default.
+
+
 
 ### Model 1
 
