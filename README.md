@@ -9,6 +9,8 @@ Link to dataset: https://www.kaggle.com/datasets/samareshkumar/multipleplantdise
 
 ### Pre-Processing
 
+To begin preprocessing the data for model training, we created a Spark dataframe with four columns: file_path, class_label, plant, and disease. 
+
 ### Model 1
 
 ### Model 2
