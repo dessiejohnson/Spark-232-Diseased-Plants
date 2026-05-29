@@ -67,6 +67,10 @@ The random forest model achieved a training accuracy of approximately 0.91 while
 
 Principal Component Analysis (PCA) retained k = 200 components, and had approximately 0.95 (95%) of the total variance in the original feature space. The high variance indicates that the dimensionality reduction preserved most of the important information in the dataset. However, high explained variance does not guarantee high classification performance, since PCA is unsupervised and does not preserve class-separating directions.
 
+The scree plot showed that approximately the first two principle component preserved approximately 55% of the dataset information. There is a sharp drop off ('elbow') after the sixth principle component. The cummulative explained variance plot indicates that 200 principle components retained approximately 95% of the total variance which shows PCA effectively reduced dimensionality while preserving most image information.
+
+![Executors](images/Scree_Plot.png)
+
 The random forest model is in the mild overfitting region with the high training score but moderate validation and test scores. The logistic regression model on the other hand is in the underfitting region with low scores in training, validation and test sets. This indicates insufficient model complexity to capture nonlinear relationships in our dataset.
 
 Some future improvements that could be done for this model is used a more advanced model like Convolutional Neural Network (CNN) which will likely deliver better image classification accuracy. The results indicate that the dimensionality reduction with PCA reduced computational cost while retaining 95% variance. PCA likely improved model stability and efficiency. 
