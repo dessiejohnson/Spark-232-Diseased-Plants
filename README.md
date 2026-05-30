@@ -168,19 +168,13 @@ conf_matrix.columns = labels
 ```
 
 ## Results
-
-
-## Discussion
-### Pre-Processing
-For preprocessing, we waited to bring in the image data until the final step before starting the model building. This way, we could do transformations on the data like stratified random sampling and splitting into the train, validation, and test sets more efficiently. The majority of the size of the dataset came from the images, so until we needed to use the data for the model building, we left it out.
-
 ### Model 1
 
 ### Model 2
 
 The random forest model achieved a training accuracy of approximately 0.91 while the validation and test accuracies were both about 0.75. In contrast, the logistic regression model achieved approximately 0.61-0.64 accuracy across training, validation, and test sets. The PCA scree plot showed that approximately the first two principle component preserved approximately 55% of the dataset information. There is a sharp drop off ('elbow') after the sixth principle component. The cummulative explained variance plot indicates that 200 principle components retained approximately 95% of the total variance which shows PCA effectively reduced dimensionality while preserving most image information.
 
-![Executors](images/Scree_Plot.png)
+![Executors](images/Model2_Scree_Plot.png)
 
 The first table below show the result accuracies for different parameters that were tested in the logistic regression model. The second table shows the accuracy results for different parameters of the random forest model.
 
@@ -207,6 +201,10 @@ Higher accuracies in the random forest model came with the tradeoff of a longer 
 In total, 5913 images were correctly classified and 1945 images were classified incorrectly.
 
 ![Executors](images/Model2_ConfusionMatrix.png)
+
+## Discussion
+For preprocessing, we waited to bring in the image data until the final step before starting the model building. This way, we could do transformations on the data like stratified random sampling and splitting into the train, validation, and test sets more efficiently. The majority of the size of the dataset came from the images, so until we needed to use the data for the model building, we left it out.
+
 
 ## Conclusion
 We learned that big data processing requires time. Even simply loading in the data required much more time than expected. Because of this, we had to think and act more carefully when it came to checking our work and tuning the models. Attempting to count the total number of null values to check our work, which would be a simple task in normal data preprocessing, might cause an out-of-memory error or timeout. Adjusting model parameters and retraining could be painstakingly slow. So, we had to think carefully about what we wanted to run.
