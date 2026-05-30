@@ -10,6 +10,7 @@ Link to dataset: https://www.kaggle.com/datasets/samareshkumar/multipleplantdise
 ### Pre-Processing
 
 To begin preprocessing the data for model training, we created a Spark dataframe with four columns: file_path, class_label, plant, and disease. To create the class_label, plant, and disease columns, we split the file_path string at different parts to isolate what we needed. 
+
 ```python metadata = spark.read.format("binaryFile") \
     .option("recursiveFileLookup", "true") \
     .load(data_path) \
@@ -19,7 +20,9 @@ To begin preprocessing the data for model training, we created a Spark dataframe
     .withColumn("disease", split.getItem(1)) \
     .select("file_path", "class_label", "plant", "disease")
  ```
+
 We created a new column called "disease_clean" to serve as the label for our binary classification problem addressed by Model 1. This new column strictly labeled an image as either healthy or diseased since the dataset originally included the specific disease type. The "plant" column served as the label for our multiclass classification problem addressed by Model 2.
+
 ```python metadata = metadata.withColumn(
     "disease_clean",
     F.when(F.lower(F.col("disease")).rlike("healthy|fresh_leaf"), "healthy")
@@ -30,6 +33,7 @@ We created a new column called "disease_clean" to serve as the label for our bin
  ```
 
 No null values were present in the dataset, so we moved on to splitting the data into training, validation, and test sets for each model. There were significant data imbalances; images of diseased plants vastly outnumbered images of healthy plants. Images of tomatoes were overrepresented while other plants like chilis and cauliflowers were severely underrepresented. To address this, we used stratified random sampling to ensure that the smaller classes were represented in our training dataset.
+
 ```python w_d = Window.partitionBy("health").orderBy(F.rand(seed=1))
 metadata_d = metadata.withColumn("row_num", F.row_number().over(w_d))\
             .withColumn("count", F.count("*").over(Window.partitionBy("health")))
