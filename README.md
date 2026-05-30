@@ -205,6 +205,11 @@ In total, 5913 images were correctly classified and 1945 images were classified 
 ## Discussion
 For preprocessing, we waited to bring in the image data until the final step before starting the model building. This way, we could do transformations on the data like stratified random sampling and splitting into the train, validation, and test sets more efficiently. The majority of the size of the dataset came from the images, so until we needed to use the data for the model building, we left it out.
 
+For model 2, the gap between training performance and performance on unseen data for the random forest classifier suggests that the model may be overfitting the training set, learning patterns that do not generalize well to new samples. In contrast, the logistic regression model exhibited consistent underfitting with low accuracies across the training, validation, and test datasets. This indicates an insufficient model complexity to capture nonlinear relationships in our dataset.
+
+The high PCA explained variance indicates that the dimensionality reduction preserved most of the important information in the dataset. However, high explained variance does not guarantee high classification performance, since PCA is unsupervised and does not preserve class-separating directions.
+
+Some future improvements that could be done for model 2 is use a more advanced model like Convolutional Neural Network (CNN) which will likely deliver better image classification accuracy.
 
 ## Conclusion
 We learned that big data processing requires time. Even simply loading in the data required much more time than expected. Because of this, we had to think and act more carefully when it came to checking our work and tuning the models. Attempting to count the total number of null values to check our work, which would be a simple task in normal data preprocessing, might cause an out-of-memory error or timeout. Adjusting model parameters and retraining could be painstakingly slow. So, we had to think carefully about what we wanted to run.
