@@ -171,9 +171,42 @@ conf_matrix.columns = labels
 
 
 ## Discussion
-
+### Pre-Processing
 For preprocessing, we waited to bring in the image data until the final step before starting the model building. This way, we could do transformations on the data like stratified random sampling and splitting into the train, validation, and test sets more efficiently. The majority of the size of the dataset came from the images, so until we needed to use the data for the model building, we left it out.
 
+### Model 1
+
+### Model 2
+
+The random forest model achieved a training accuracy of approximately 0.91 while the validation and test accuracies were both about 0.75. In contrast, the logistic regression model achieved approximately 0.61-0.64 accuracy across training, validation, and test sets. The PCA scree plot showed that approximately the first two principle component preserved approximately 55% of the dataset information. There is a sharp drop off ('elbow') after the sixth principle component. The cummulative explained variance plot indicates that 200 principle components retained approximately 95% of the total variance which shows PCA effectively reduced dimensionality while preserving most image information.
+
+![Executors](images/Scree_Plot.png)
+
+The first table below show the result accuracies for different parameters that were tested in the logistic regression model. The second table shows the accuracy results for different parameters of the random forest model.
+
+| Parameter(s)       | Training Accuracy | Validation Accuracy | Test Accuracy |
+|--------------------|-------------------|---------------------|---------------|
+| k=10, 8x8 image    | 0.46              | 0.45                | 0.45          |
+| k=100, 8x8 image   | 0.63              | 0.62                | 0.63          |
+| k=100, 16x16 image | 0.61              | 0.61                | 0.60          |
+| k=100, 24x24 image | 0.60              | 0.60                | 0.60          |
+| k=300, 24x24 image | 0.66              | 0.62                | 0.63          |
+
+| Parameter(s)              | Training Accuracy | Validation Accuracy | Test Accuracy |  PCA, image size   |
+|---------------------------|-------------------|---------------------|---------------|--------------------|
+| numTrees=50, maxDepth=8   | 0.70              | 0.62                | 0.63          | k=300, 24x24 image |
+| numTrees=100, maxDepth=12 | 0.92              | 0.75                | 0.74          | k=300, 24x24 image |
+| numTrees=100, maxDepth=10 | 0.84              | 0.70                | 0.71          | k=300, 24x24 image |
+| numTrees=150, maxDepth=12 | 0.93              | 0.76                | 0.76          | k=300, 24x24 image |
+| numTrees=100, maxDepth=14 | 0.97              | 0.77                | 0.78          | k=300, 24x24 image |
+| numTrees=100, maxDepth=12 | 0.92              | 0.75                | 0.74          | k=300, 32x32 image |
+| numTrees=100, maxDepth=12 | 0.92              | 0.75                | 0.75          | k=200, 24x24 image |
+
+Higher accuracies in the random forest model came with the tradeoff of a longer training time. The Spark driver memory had to be increased from the recommended 2GB to 12GB for the model training to complete in a reasonable timeframe.
+
+In total, 5913 images were correctly classified and 1945 images were classified incorrectly.
+
+![Executors](images/Model2_ConfusionMatrix.png)
 
 ## Conclusion
 We learned that big data processing requires time. Even simply loading in the data required much more time than expected. Because of this, we had to think and act more carefully when it came to checking our work and tuning the models. Attempting to count the total number of null values to check our work, which would be a simple task in normal data preprocessing, might cause an out-of-memory error or timeout. Adjusting model parameters and retraining could be painstakingly slow. So, we had to think carefully about what we wanted to run.
