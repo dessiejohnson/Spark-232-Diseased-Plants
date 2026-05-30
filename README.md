@@ -87,6 +87,87 @@ def decode_image(contents: pd.Series) -> pd.Series:
 
 ### Model 2
 
+For our second model, we used dimensionality reduction followed by a Random Forest Model to determine the species of the plants in the dataset. Principle Component Analysis (PCA) was used for the dimensionality reduction. The parameter k=200 was chosen for the number of components and it was fitted to the training data. Then the PCA model was applied to the training, validation and test datasets.
+
+```python
+pca = PCA(k=200, inputCol="features", outputCol="pca_features")
+pca_model = pca.fit(train_s)
+train_pca = pca_model.transform(train_s)
+val_pca = pca_model.transform(val_s)
+test_pca = pca_model.transform(test_s)
+```
+After dimensionality reduction, a logistic regression model was initially trained on the dataset with a maxIter=20. However, due to the poor performance of the model performance, a random forest model was implemented. The random forest model was trained with numTrees=100 and maxDepth=12.
+
+```python
+lr = LogisticRegression(
+    featuresCol='pca_features',
+    labelCol='label',
+    weightCol='weight',
+    maxIter=20,
+    regParam=0.01
+)
+lr_model = lr.fit(train_pca)
+```
+```python
+rf = RandomForestClassifier(
+    featuresCol='pca_features',
+    labelCol='label',
+    weightCol='weight',
+    numTrees=100,
+    maxDepth=12,
+    seed=1
+)
+rf_model = rf.fit(train_pca)
+```
+Both models were evaluated using multiclass classification evaluator to calculate the training, validation and test accuracies.
+
+```python
+evaluator_lr = MulticlassClassificationEvaluator(
+    labelCol='label',
+    predictionCol='prediction',
+    metricName='accuracy'
+)
+
+train_acc_lr = evaluator_lr.evaluate(train_pred_lr)
+val_acc_lr = evaluator_lr.evaluate(val_pred_lr)
+test_acc_lr = evaluator_lr.evaluate(test_pred_lr)
+```
+Analysis of the PCA reduction was done by calculating the explained variance and a scree plot to show the contribution of the PCA components.
+
+```python
+explained_variance = pca_model.explainedVariance.toArray()
+total_variance = explained_variance.sum()
+cumulative_variance = np.cumsum(explained_variance)
+
+plt.plot(
+    range(1, len(explained_variance)+1),
+    explained_variance,
+    marker='o',
+    linestyle='--',
+    label='Individual Explained Variance'
+)
+```
+Lastly, the performance of the random forest model was evaluated with a confusion matrix to show what plants had the most incorrect classifications.
+
+```python
+conf_pd = (
+    test_pred_rf
+    .select("label", "prediction")
+    .groupBy("label", "prediction")
+    .count()
+    .toPandas()
+)
+
+conf_matrix = conf_pd.pivot(
+    index="label",
+    columns="prediction",
+    values="count"
+).fillna(0)
+
+labels = le_s.labels
+conf_matrix.index = labels
+conf_matrix.columns = labels
+```
 
 ## Results
 
@@ -98,6 +179,8 @@ For preprocessing, we waited to bring in the image data until the final step bef
 
 ## Conclusion
 We learned that big data processing requires time. Even simply loading in the data required much more time than expected. Because of this, we had to think and act more carefully when it came to checking our work and tuning the models. Attempting to count the total number of null values to check our work, which would be a simple task in normal data preprocessing, might cause an out-of-memory error or timeout. Adjusting model parameters and retraining could be painstakingly slow. So, we had to think carefully about what we wanted to run.
+
+The HPC server provided a convenient development environment through centralized management and access to pre-installed packages. Nevertheless, competition for computing resources sometimes introduced delays, which needed to be considered when establishing project timelines.
 
 We would like to explore different ways of preprocessing the image data, like using pretrained embeddings such as ResNet rather than our current approach. This may increase our model performance.  
 
