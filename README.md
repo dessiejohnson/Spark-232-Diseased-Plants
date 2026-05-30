@@ -106,7 +106,6 @@ lr = LogisticRegression(
     maxIter=20,
     regParam=0.01
 )
-lr_model = lr.fit(train_pca)
 ```
 ```python
 rf = RandomForestClassifier(
@@ -117,7 +116,6 @@ rf = RandomForestClassifier(
     maxDepth=12,
     seed=1
 )
-rf_model = rf.fit(train_pca)
 ```
 Both models were evaluated using multiclass classification evaluator to calculate the training, validation and test accuracies.
 
