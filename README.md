@@ -57,6 +57,9 @@ weights_d = class_counts_d.withColumn(
 train_d = train_d.join(weights_d, on="label", how="left")
 
  ```
+
+Finally, we preprocessed the images. We brought in the image data and joined them to our train, validation, and test sets. We used a pandas UDF to ensure all images were the same size and correct format for the models. 
+
 ```python @pandas_udf(ArrayType(FloatType()))
 def decode_image(contents: pd.Series) -> pd.Series:
     result = []
@@ -74,13 +77,6 @@ def decode_image(contents: pd.Series) -> pd.Series:
     return pd.Series(result)
 
  ```
-
-Finally, we preprocessed the images. We brought in the image data and joined them to our train, validation, and test sets. We used a pandas UDF to ensure all images were the same size and correct format for the models. 
-
-
-
-
-
 
 ### Model 1
 
