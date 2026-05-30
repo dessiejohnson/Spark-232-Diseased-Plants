@@ -63,7 +63,7 @@ weights_d = class_counts_d.withColumn(
 train_d = train_d.join(weights_d, on="label", how="left")
  ```
 
-Finally, we preprocessed the images. We brought in the image data and joined them to our train, validation, and test sets. We used a pandas UDF to ensure all images were the same size and correct format for the models. 
+Finally, we preprocessed the images. We brought in the image data and joined them to our train, validation, and test sets. We used a pandas UDF to ensure all images were the same size and correct format for the models by resizing, normalizing, and flattening the images into vectors. 
 
 ```python
 @pandas_udf(ArrayType(FloatType()))
@@ -97,6 +97,9 @@ For preprocessing, we waited to bring in the image data until the final step bef
 
 
 ## Conclusion
+We learned that big data processing requires time. Even simply loading in the data required much more time than expected. Because of this, we had to think and act more carefully when it came to checking our work and tuning the models. Attempting to count the total number of null values to check our work, which would be a simple task in normal data preprocessing, might cause an out-of-memory error or timeout. Adjusting model parameters and retraining could be painstakingly slow. So, we had to think carefully about what we wanted to run.
+
+We would like to explore different ways of preprocessing the image data, like using pretrained embeddings such as ResNet rather than our current approach. This may increase our model performance.  
 
 
 ## Statement of Collaboration
